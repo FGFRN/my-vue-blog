@@ -1,5 +1,82 @@
-# Vue 3 + Vite
+# My Vue Blog — FGFRN 个人手记
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+基于 Figma 桌面与手机稿实现的 Vue 3 个人博客前台与管理页面。纯前端模拟，无后端服务。
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## 技术栈与课程要求
+
+- HTML5：header、nav、main、section、article、footer、figure、time、表单、图片等语义及媒体元素。
+- CSS3：Flex/Grid、悬停过渡、媒体查询与手机响应式布局。
+- JavaScript：数组筛选、排序、分页与 localStorage 数据持久化。
+- Vue 3：单文件组件、Composition API、props/emits、事件绑定、v-model 双向绑定、computed。
+- Vue Router 4：首页、文章详情、关于、管理、新增、编辑及 404 路由。
+- 加分功能：深浅主题、全站文章搜索、本地阅读次数统计。
+
+## 启动与检查
+
+Node.js 22.12 或更新版本。首次运行：
+
+```sh
+npm install
+npm run dev
+```
+
+访问终端打印的本机地址（默认 http://localhost:5173/my-vue-blog/ ）。
+
+```sh
+npm run test   # 存储、筛选、分页等逻辑测试
+npm run build  # 生产构建，输出 dist/
+npm run check  # 测试和构建
+npm run preview # 本地检查构建结果
+```
+
+保留原项目 `vite.config.js` 的 `/my-vue-blog/` 部署路径和 GitHub Pages 工作流。采用 Hash 路由，静态托管时刷新详情及管理页不需要服务器重写规则。本次仅本地修改，未提交、推送或发布。
+
+## 页面
+
+| 地址（接在 /my-vue-blog/ 后） | 功能 |
+| --- | --- |
+| `#/` | 首页、分类/标签筛选、分页；每页3篇 |
+| `#/articles/:id` | 正文详情、阅读次数、标签跳转 |
+| `#/about` | 个人介绍 |
+| `#/admin` | 统计、搜索、编辑与删除入口 |
+| `#/admin/new` | 新增文章 |
+| `#/admin/edit/:id` | 编辑文章 |
+
+## 验收步骤
+
+1. 首页点击下一页，按分类或标签筛选，打开搜索并查找“离线”。
+2. 从文章卡片进入详情，再返回管理页面查看阅读次数。
+3. 管理页面新增文章，填写标题、分类、标签、摘要、正文并选择封面；保存后刷新，确认文章仍在。
+4. 编辑文章后刷新，确认修改已保存；删除时先取消，再确认删除，验证列表与首页同步。
+5. 编辑未保存的内容，点击返回，确认出现放弃修改提示。
+6. 检查390px手机屏幕下的两行导航、单列卡片、纵向表单。管理表格可在自身区域横向滚动。
+7. 切换深浅主题后刷新，确认偏好保留。
+
+## 目录
+
+```text
+src/
+  main.js             应用启动和路由注册
+  App.vue             页面外壳、主题与搜索入口
+  router/index.js     Vue Router 路由
+  views/              首页、详情、管理、编辑、关于、404
+  components/         导航、卡片、精选、分页、订阅、搜索、弹窗
+  stores/blog.js      共享响应式文章状态及增删改/阅读统计
+  utils/articleRepository.js  存储校验、筛选与分页
+  data/               初始示例文章和素材配置
+  assets/             本地 SVG 示意图片
+  styles.css          首页与两端布局
+  application.css     路由页面与管理样式
+tests/                数据逻辑测试
+```
+
+## 数据与当前边界
+
+- 首次访问显示6篇演示文章，演示正文明确标记；新增和修改后的内容在同浏览器刷新后保留。清空站点数据会丢失修改，不会跨浏览器或跨域名同步。
+- 文章数据键：`fgfrn-blog-articles-v1`；主题键：`fgfrn-theme`。阅读次数按详情页访问累计，仅为当前浏览器模拟值。
+- 如存储损坏或不可用，会显示提示并避免覆盖异常原数据；写入失败会说明内容可能在刷新后丢失。
+- 管理页是无登录的课设演示，不提供真实用户权限或线上共享数据。
+- 正文按纯文本渲染，支持以 `## ` 开头的小标题，不执行用户输入的 HTML。删除有确认弹窗；编辑离开路由时会提醒未保存修改，关闭浏览器标签前请先保存。
+- 订阅仅做邮箱格式校验，不保存邮箱、不实际发送邮件。
+- 图片仍是本地示意插图，不是 Figma 原始素材；精确还原需要替换设计稿导出的素材。
+- 原有未使用的示例组件和文件保留，避免删除既有文件；应用入口不再引用它们。
