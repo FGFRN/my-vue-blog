@@ -7,4 +7,5 @@ export const socialLinks = [
   { id: 'discord', label: 'Discord', href: '' },
   { id: 'qq', label: 'QQ', href: '' },
   { id: 'github', label: 'GitHub', href: 'https://github.com/FGFRN' },
+  { id: 'douyin', label: 'Douyin', href: '' },
 ]

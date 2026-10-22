@@ -1,0 +1,17 @@
+/* 更换字体时，将新文件放入 assets/fonts，并修改下面的文件名。 */
+@font-face {
+  font-family: 'Blog Article Song';
+  src: url('./assets/fonts/AaGuDianKeBenSongYouMoBan-2.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --article-font-family: 'Blog Article Song', 'Songti SC', SimSun, serif;
+}
+
+.reading-article > header > h1,
+.reading-article > .reading-intro {
+  font-family: var(--article-font-family);
+}

@@ -81,7 +81,7 @@ function submit() {
             :value="cover.id"><img :src="cover.src" :alt="cover.alt"><span>{{ cover.label }}</span></label>
       </fieldset>
       <label for="article-content">正文 <span>必填，最多30,000字</span></label>
-      <p id="content-help" class="editor-help">用Markdown语法书写</p><textarea
+      <p id="content-help" class="editor-help">支持 Markdown：标题、粗体、列表、引用、代码块、链接、图片、表格和任务清单。段落之间空一行，原始 HTML 不会执行。</p><textarea
         id="article-content" v-model="draft.content" required maxlength="30000" rows="16"
         aria-describedby="content-help" placeholder="从这里开始…"></textarea>
       <p class="editor-count">{{ characterCount }} 字 · 预计阅读 {{ Math.max(1, Math.ceil(characterCount / 350)) }} 分钟</p>
@@ -100,3 +100,4 @@ function submit() {
     </BaseDialog>
   </main>
 </template>
+

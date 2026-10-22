@@ -3,10 +3,10 @@ import { computed, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useBlog } from '../stores/blog.js'
 import { coverFor } from '../data/media.js'
+import MarkdownContent from '../components/MarkdownContent.vue'
 const route = useRoute()
 const { findArticle, recordView } = useBlog()
 const article = computed(() => findArticle(route.params.id))
-const paragraphs = computed(() => article.value?.content.split(/\n+/).map(line => ({ heading: line.startsWith('## '), text: line.replace(/^## /, '') })) || [])
 watch(() => route.params.id, id => {
   recordView(id)
   if (article.value) document.title = `${article.value.title} — FGFRN`
@@ -31,10 +31,7 @@ watch(() => route.params.id, id => {
         <figcaption>{{ coverFor(article.cover).alt }}</figcaption>
       </figure>
       <p v-if="article.demo" class="reader-notice">课设演示文章，可在管理页面替换为你的正式内容。</p>
-      <p class="reading-intro">{{ article.excerpt }}</p><template v-for="(paragraph, index) in paragraphs" :key="index">
-        <h2 v-if="paragraph.heading">{{ paragraph.text }}</h2>
-        <p v-else>{{ paragraph.text }}</p>
-      </template>
+      <p class="reading-intro">{{ article.excerpt }}</p><MarkdownContent :content="article.content" />
       <footer class="reading-footer">
         <RouterLink class="text-link" :to="`/admin/edit/${article.id}`">编辑这篇文章 ↗</RouterLink>
         <RouterLink class="text-link" to="/">继续阅读 →</RouterLink>
@@ -46,3 +43,4 @@ watch(() => route.params.id, id => {
     </section>
   </main>
 </template>
+

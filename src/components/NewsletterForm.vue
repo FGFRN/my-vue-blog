@@ -6,7 +6,7 @@ const message = ref('随时可退订')
 const error = ref(false)
 function submit() {
   error.value = !email.value.trim() || !emailInput.value.validity.valid
-  message.value = error.value ? '请输入有效的电子邮箱，例如 hello@example.com。' : '验证邮件已发送，请检查邮箱'
+  message.value = error.value ? '请输入有效的电子邮箱，例如 hello@example.com。' : '尚未接入邮箱功能，敬请期待'
   if (error.value) emailInput.value.focus()
 }
 </script>
@@ -22,7 +22,7 @@ function submit() {
             aria-hidden="true">→</span></button></div>
       <p id="newsletter-message" class="form-message" :class="{
         error: error,
-        success: !error && message === '验证邮件已发送，请检查邮箱'
+        success: !error && message === '尚未接入邮箱功能，敬请期待'
       }" role="status">{{ message }}</p>
     </form>
   </section>
