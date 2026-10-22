@@ -11,7 +11,7 @@ function memoryStorage() {
 test('CRUD data survives serialization including an empty collection', () => {
   const storage = memoryStorage()
   const articles = loadArticles(storage, initialArticles)
-  const added = { ...articles[0], id: 'test-article', title: '新文章', views: 2 }
+  const added = { ...articles[0], id: '12345678', title: '新文章', views: 2 }
   articles.push(added)
   saveArticles(storage, articles)
   assert.equal(loadArticles(storage, initialArticles).find(article => article.id === added.id).title, '新文章')
@@ -32,8 +32,8 @@ test('invalid saved data is rejected instead of overwriting it', () => {
   assert.throws(() => loadArticles(storage, initialArticles))
 })
 test('tags and trimmed keyword filters work together', () => {
-  assert.equal(filterArticles(initialArticles, { tag: '人工智能' })[0].id, 'interface')
-  assert.equal(filterArticles(initialArticles, { query: '  离线  ' }).some(article => article.id === 'offline'), true)
+  assert.equal(filterArticles(initialArticles, { tag: '人工智能' })[0].id, '10000001')
+  assert.equal(filterArticles(initialArticles, { query: '  离线  ' }).some(article => article.id === '10000004'), true)
   assert.equal(filterArticles(initialArticles, { tag: '设计', query: '人工智能' }).length, 1)
   assert.equal(filterArticles(initialArticles, { query: '没有这个关键词' }).length, 0)
 })

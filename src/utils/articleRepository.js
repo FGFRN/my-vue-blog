@@ -1,4 +1,6 @@
 import { normalizeArticleTags } from './tags.js'
+import { migrateArticleIds, isArticleId, generateArticleId, findArticleById } from './articleIds.js'
+import { mergeTags } from './tags.js'
 export const STORAGE_KEY = 'fgfrn-blog-articles-v1'
 
 export function validateArticles(value) {
@@ -8,6 +10,7 @@ export function validateArticles(value) {
     if (!article || typeof article !== 'object') return false
     if (!['id', 'title', 'excerpt', 'content', 'cover', 'date'].every(key => typeof article[key] === 'string')) return false
     if ('category' in article && typeof article.category !== 'string') return false
+    if ('legacyIds' in article && (!Array.isArray(article.legacyIds) || !article.legacyIds.every(id => typeof id === 'string'))) return false
     if (!article.id || !article.title.trim() || !article.content.trim() || ids.has(article.id)) return false
     ids.add(article.id)
     return Array.isArray(article.tags) && article.tags.every(tag => typeof tag === 'string') && Number.isFinite(article.views) && article.views >= 0 && Number.isFinite(article.minutes) && article.minutes > 0
@@ -16,15 +19,44 @@ export function validateArticles(value) {
 
 export function loadArticles(storage, defaults) {
   const saved = storage.getItem(STORAGE_KEY)
-  if (saved === null) return structuredClone(defaults).map(normalizeArticleTags)
+  if (saved === null) return migrateArticleIds(structuredClone(defaults).map(normalizeArticleTags))
   const parsed = JSON.parse(saved)
   if (!validateArticles(parsed)) throw new Error('文章数据格式不正确')
-  return parsed.map(normalizeArticleTags)
+  return migrateArticleIds(parsed.map(normalizeArticleTags))
 }
 
 export function saveArticles(storage, articles) {
-  if (!validateArticles(articles)) throw new Error('文章数据格式不正确')
+  if (!validateArticles(articles) || !articles.every(article => isArticleId(article.id))) throw new Error('文章数据格式不正确')
   storage.setItem(STORAGE_KEY, JSON.stringify(articles.map(normalizeArticleTags)))
+}
+
+export { findArticleById }
+
+// UI-independent article operations; a future API adapter can replace this boundary.
+export function upsertArticle(articles, draft, id) {
+  const existing = id ? findArticleById(articles, id) : null
+  if (id && !existing) throw new Error('文章不存在，无法保存。')
+  const article = {
+    id: existing?.id || generateArticleId(articles),
+    ...(existing?.legacyIds ? { legacyIds: existing.legacyIds } : {}),
+    title: draft.title.trim(), tags: mergeTags(draft.tags),
+    excerpt: draft.excerpt.trim(), content: draft.content.trim(), cover: draft.cover,
+    date: existing?.date || new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Shanghai' }).format(new Date()),
+    minutes: Math.max(1, Math.ceil(draft.content.trim().length / 350)),
+    views: existing?.views || 0, demo: false,
+  }
+  if (!article.title || !article.excerpt || !article.content) throw new Error('请填写标题、摘要和正文。')
+  return { article, articles: existing ? articles.map(item => item.id === existing.id ? article : item) : [article, ...articles] }
+}
+
+export function removeArticle(articles, id) {
+  const article = findArticleById(articles, id)
+  return articles.filter(item => item !== article)
+}
+
+export function incrementArticleViews(articles, id) {
+  const article = findArticleById(articles, id)
+  return articles.map(item => item === article ? { ...item, views: item.views + 1 } : item)
 }
 
 export function filterArticles(articles, { tag, category = 'all', query = '' } = {}) {

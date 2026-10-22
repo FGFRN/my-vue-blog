@@ -1,22 +1,129 @@
-import { seedArticles } from './seed.js'
-
-const readingMinutes = { interface: 8, quiet: 6, tools: 5, offline: 4 }
-const coverIds = { interface: 'interface', quiet: 'quiet', tools: 'wave', offline: 'book' }
-export const initialArticles = Object.entries(seedArticles).map(([id, article]) => ({
-  id,
-  title: article.title,
-  tags: id === 'interface' ? ['科技', '人工智能', '设计'] : [article.category],
-  excerpt: article.intro,
-  content: article.sections.map(([heading, paragraph]) => `## ${heading}\n${paragraph}`).join('\n\n'),
-  cover: coverIds[id],
-  date: { interface: '2026-10-12', quiet: '2026-10-08', tools: '2026-10-03', offline: '2026-09-28' }[id],
-  minutes: readingMinutes[id],
-  views: 0,
-  demo: true,
-}))
-
-// Additional examples make pagination observable without requiring any manual setup.
-initialArticles.push(
-  { id: 'small-steps', title: '把想法变成作品，从小处开始', tags: ['设计', '创作', '实践'], excerpt: '先做出一个能被使用的小作品，再在反馈中慢慢改进。', content: '## 从一个问题开始\n作品不一定需要宏大的目标。找一个每天都会遇到的小问题，描述清楚它给谁带来了什么困扰。\n\n## 留下迭代的痕迹\n记录每一次取舍，比一次性追求完美更有价值。把最重要的路径先走通，再逐步完善边缘细节。', cover: 'quiet', date: '2026-09-20', minutes: 3, views: 0, demo: true },
-  { id: 'notes-on-learning', title: '学习笔记，也是一种与自己对话', tags: ['生活与创作', '学习', '随笔'], excerpt: '比起收藏更多链接，试着用自己的语言解释一个刚刚理解的概念。', content: '## 用自己的话解释\n如果不能清楚地解释一个概念，也许还有值得继续追问的地方。写下自己的理解，能让这些空白变得可见。\n\n## 定期重新阅读\n旧笔记会记录我们思考方式的变化。重新阅读时，补充新的例子，也允许自己修正过去的判断。', cover: 'book', date: '2026-09-12', minutes: 3, views: 0, demo: true },
-)
+// 全部演示文章统一维护于此；正文使用 Markdown 格式。
+export const initialArticles = [
+  {
+    "id": "39220742",
+    "title": "Markdown演示",
+    "tags": [
+      "科技",
+      "设计"
+    ],
+    "excerpt": "文章支持使用markdown语法",
+    "content": "# Markdown 写作示例\n\n普通段落之间空一行。可以使用 **粗体**、*斜体*、~~删除线~~和 `行内代码`。\n\n[跳到表格](#表格)\n\n## 列表\n\n- 第一项\n- 第二项\n  - 嵌套子项\n\n1. 打开文章管理\n2. 创建文章\n3. 保存并阅读\n\n## 任务清单\n\n- [x] 支持 Markdown 正文\n- [ ] 写下下一篇文章\n\n> 好的表达，来自清晰的思考。\n\n## 代码\n\n```javascript\nconst message = 'Hello, Vue!'\nconsole.log(message)\n```\n\n## 表格\n\n| 功能 | 状态 |\n| :--- | :---: |\n| 文章管理 | 已完成 |\n| 标签多选 | 已完成 |\n| Markdown | 已完成 |\n\n---\n\n## 链接和图片\n\n[访问 Vue 官方网站](https://vuejs.org/)\n\n图片格式：`![图片描述](https://你的图片地址)`。\n\n换行：在行尾添加两个空格，再换行。新段落：空一行。\n\n## 数学公式\n\n行内公式：$E=mc^2$，以及 $a^2+b^2=c^2$。\n\n独立公式（`$$` 各自独占一行）：\n\n$$\n\\int_0^1 x^2\\,dx = \\frac{1}{3}\n$$\n\n原始 HTML 会按普通文字显示，不会执行脚本。流程图和代码语法高亮未启用。",
+    "cover": "book",
+    "date": "2026-10-22",
+    "minutes": 2,
+    "views": 5,
+    "demo": false,
+    "legacyIds": [
+      "26921339-58ae-48b9-8e60-dcf3593aae65"
+    ]
+  },
+  {
+    "id": "10000001",
+    "legacyIds": [
+      "interface"
+    ],
+    "title": "下一个界面，是没有界面。",
+    "tags": [
+      "科技",
+      "人工智能",
+      "设计"
+    ],
+    "excerpt": "当人工智能走出聊天框，最有用的科技，或许是那些让我们几乎察觉不到的存在。",
+    "content": "## 从操作到意图\n我们习惯了点击按钮、打开菜单，再在不同页面之间寻找答案。但工具的目标，并不是让我们更熟练地操作工具，而是帮助我们把想做的事完成。好的界面可以在需要时出现，在任务结束时安静退场。\n\n## 把决定权留给人\n减少界面不意味着减少解释。系统仍然需要清楚地告诉我们发生了什么、哪些步骤可以撤回，以及下一步将产生什么影响。方便与可控，应当同时存在。",
+    "cover": "interface",
+    "date": "2026-10-12",
+    "minutes": 8,
+    "views": 0,
+    "demo": true
+  },
+  {
+    "id": "10000002",
+    "legacyIds": [
+      "quiet"
+    ],
+    "title": "为安静的设计辩护",
+    "tags": [
+      "设计"
+    ],
+    "excerpt": "并非一切都需要争夺注意力。数字空间，也可以让我们有所放松。",
+    "content": "## 让内容获得空间\n设计里的留白并不是没有使用的面积。它让内容有了边界，让阅读有了节奏，也让人能够区分什么值得停下来，什么可以稍后再看。\n\n## 少一点打扰\n一个安静的产品，会谨慎地使用提醒、动画和鲜明的颜色。当每一件事都被标记为重要，重要便失去了意义。把注意力还给使用者，是一种值得坚持的设计选择。",
+    "cover": "quiet",
+    "date": "2026-10-08",
+    "minutes": 6,
+    "views": 0,
+    "demo": true
+  },
+  {
+    "id": "10000003",
+    "legacyIds": [
+      "tools"
+    ],
+    "title": "与我们共同思考的工具",
+    "tags": [
+      "科技"
+    ],
+    "excerpt": "关于创作自主性、有益的阻力，以及与人工智能并肩工作的另一种思考。",
+    "content": "## 先形成自己的问题\n工具可以加速寻找答案，但提出什么问题仍然是创作者的工作。在请求建议之前，先写下自己的判断、限制与疑问，这会让后续的讨论更加有用。\n\n## 保留思考的过程\n真正有帮助的协作，不只是交付一个看起来完整的结果。它也应当暴露假设，容纳不同意见，并让我们有机会验证。工具可以拓展思考，但最终的取舍需要由人承担。",
+    "cover": "wave",
+    "date": "2026-10-03",
+    "minutes": 5,
+    "views": 0,
+    "demo": true
+  },
+  {
+    "id": "10000004",
+    "legacyIds": [
+      "offline"
+    ],
+    "title": "多一点离线时光",
+    "tags": [
+      "生活与创作"
+    ],
+    "excerpt": "一个月的慢节奏清单，让重要思考和好奇在互联网之外继续生长。",
+    "content": "## 给一天留一点空白\n散步时不戴耳机，读书时把手机留在另一个房间，或者用纸笔记下今天遇见的一个问题。这些小事不需要变成新的任务清单，只需要给自己一点不被打断的时间。\n\n## 观察，然后记录\n创作的素材不只来自屏幕。街边的光线、朋友的一句话、一本旧书里的批注，都可能成为下一次表达的起点。离线并不是离开世界，而是换一种方式参与其中。",
+    "cover": "book",
+    "date": "2026-09-28",
+    "minutes": 4,
+    "views": 0,
+    "demo": true
+  },
+  {
+    "id": "10000005",
+    "legacyIds": [
+      "small-steps"
+    ],
+    "title": "把想法变成作品，从小处开始",
+    "tags": [
+      "设计",
+      "创作",
+      "实践"
+    ],
+    "excerpt": "先做出一个能被使用的小作品，再在反馈中慢慢改进。",
+    "content": "## 从一个问题开始\n作品不一定需要宏大的目标。找一个每天都会遇到的小问题，描述清楚它给谁带来了什么困扰。\n\n## 留下迭代的痕迹\n记录每一次取舍，比一次性追求完美更有价值。把最重要的路径先走通，再逐步完善边缘细节。",
+    "cover": "quiet",
+    "date": "2026-09-20",
+    "minutes": 3,
+    "views": 0,
+    "demo": true
+  },
+  {
+    "id": "10000006",
+    "legacyIds": [
+      "notes-on-learning"
+    ],
+    "title": "学习笔记，也是一种与自己对话",
+    "tags": [
+      "生活与创作",
+      "学习",
+      "随笔"
+    ],
+    "excerpt": "比起收藏更多链接，试着用自己的语言解释一个刚刚理解的概念。",
+    "content": "## 用自己的话解释\n如果不能清楚地解释一个概念，也许还有值得继续追问的地方。写下自己的理解，能让这些空白变得可见。\n\n## 定期重新阅读\n旧笔记会记录我们思考方式的变化。重新阅读时，补充新的例子，也允许自己修正过去的判断。",
+    "cover": "book",
+    "date": "2026-09-12",
+    "minutes": 3,
+    "views": 0,
+    "demo": true
+  }
+]
