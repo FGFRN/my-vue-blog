@@ -11,7 +11,11 @@
   --article-font-family: 'Blog Article Song', 'Songti SC', SimSun, serif;
 }
 
-.reading-article > header > h1,
-.reading-article > .reading-intro {
+.reading-article > header > .reading-intro {
   font-family: var(--article-font-family);
+  margin: 0 0 20px;
+  line-height: 1.8;
+  color: var(--muted);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }

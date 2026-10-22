@@ -13,7 +13,7 @@ function submit() {
 
 <template>
   <section id="newsletter" class="newsletter" aria-labelledby="newsletter-title"><span class="eyebrow">不定期来信</span>
-    <h2 id="newsletter-title">好的新想法，直达你的收件箱。</h2>
+    <h2 id="newsletter-title">让你可以收到我最新的文章</h2>
     <p>只有新文章、有趣的发现，以及创作途中的随想，没有噪音。</p>
     <form novalidate @submit.prevent="submit"><label class="sr-only" for="email">你的电子邮箱</label>
       <div class="form-row"><input id="email" ref="emailInput" v-model="email" name="email" type="email"

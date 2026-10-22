@@ -26,7 +26,7 @@ function changePage(page) { router.push({ path: '/', query: { ...route.query, pa
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-eyebrow"><span class="eyebrow">Hello World</span><span class="independent"><i></i>
           独立思考，自由表达</span></div>
-      <h1 id="hero-title">以人的视角，<br>看数字世界。</h1>
+      <h1 id="hero-title">透过人的视角，<br>展望数字世界。</h1>
       <p class="hero-description">我是 FGFRN，一名软件设计与代码爱好者。<br class="desktop-break">在这里，记录技术、设计，以及生活里的微小发现。</p><span
         class="mobile-independent"><i></i> 独立思考，自由表达</span>
     </section>
