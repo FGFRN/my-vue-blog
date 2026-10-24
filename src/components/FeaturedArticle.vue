@@ -10,9 +10,8 @@ defineProps({ article: { type: Object, required: true } })
       <p class="eyebrow"><span class="blue-dot">精选文章</span><span class="muted">{{ article.tags.join(' · ') || '个人手记'
           }}</span></p>
       <h2>
-        <RouterLink :to="`/articles/${article.id}`" class="article-title"><template
-            v-if="article.title === '下一个界面，是没有界面。'">下一个界面，<br>是没有界面。</template><template v-else>{{ article.title
-            }}</template></RouterLink>
+        <RouterLink :to="`/articles/${article.id}`" class="article-title">{{ article.title
+            }}</RouterLink>
       </h2>
       <p class="excerpt">{{ article.excerpt }}</p>
       <div class="featured-bottom"><span class="meta">{{ article.date }} / 阅读约{{ article.minutes }}分钟</span>

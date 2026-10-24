@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue'
 import { initialArticles } from '../data/articles.js'
 import { loadArticles, saveArticles, findArticleById, upsertArticle, removeArticle, incrementArticleViews } from '../utils/articleRepository.js'
-import { migrateArticleIds } from '../utils/articleIds.js'
+import { normalizeArticleIds } from '../utils/articleIds.js'
 import { mergeTags, normalizeArticleTags, validateTagName, loadTagLibrary, TAG_STORAGE_KEY } from '../utils/tags.js'
 
 const storageWarning = ref('')
@@ -9,7 +9,7 @@ const storageBlocked = ref(false)
 let initial
 try { initial = loadArticles(window.localStorage, initialArticles) }
 catch {
-  initial = migrateArticleIds(structuredClone(initialArticles).map(normalizeArticleTags))
+  initial = normalizeArticleIds(structuredClone(initialArticles).map(normalizeArticleTags))
   storageBlocked.value = true
   storageWarning.value = '本地存储不可用或已有数据格式异常。当前展示演示数据，修改仅在本次页面中生效，原存储不会被覆盖。'
 }

@@ -14,7 +14,7 @@ const route = useRoute()
 const router = useRouter()
 const tag = computed(() => typeof route.query.tag === 'string' ? route.query.tag : typeof route.query.category === 'string' ? route.query.category : 'all')
 const filters = computed(() => ['all', ...availableTags.value])
-const featured = computed(() => sortedArticles.value.find(article => article.id === '10000001' || article.legacyIds?.includes('interface')) || sortedArticles.value[0])
+const featured = computed(() => sortedArticles.value.find(article => article.id === '10000001') || sortedArticles.value[0])
 const filtered = computed(() => filterArticles(sortedArticles.value, { tag: tag.value }).filter(article => tag.value !== 'all' || article.id !== featured.value?.id))
 const pagination = computed(() => paginate(filtered.value, Number.parseInt(route.query.page, 10) || 1, 3))
 function changeTag(value) { router.push({ path: '/', query: value === 'all' ? {} : { tag: value }, hash: '#writing' }) }
